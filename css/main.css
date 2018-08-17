@@ -1,0 +1,399 @@
+/*
+ * CSS Reset, font-icons import and common styles
+ *
+ */
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+body, section, header, main, nav,
+h1, h2, h3, h4, h5, h6
+p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+html, 
+body {
+    margin: 0;
+    padding: 0; 
+}
+
+body {
+    color: #fff;
+    font-family: 'Open Sans Condensed', sans-serif;
+    background: #333 url('../img/chalkboard.jpg') 0 0 repeat;
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.board {
+    padding: 5px;
+    border: 1px solid transparent;
+}
+
+.deck {
+    display: grid;
+    padding: 10px;
+    grid-gap: 10px;
+    grid-auto-rows: 70px;
+    background-color: #3a3a3a;
+    box-shadow: 0 0 1.5em rgba(0, 0, 0, .5);
+    grid-template-columns: repeat(4, minmax(60px, 1fr));
+}
+
+
+/* header + navigation controls */
+.navigation {
+    margin: 0;
+    display: flex;
+    padding: 10px 0;
+    align-items: center;
+    justify-content: space-between;
+}
+.title {
+    text-align: center;
+    margin-bottom: 2.5%;
+}
+.btn-reset {
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    background-color: transparent;
+}
+.stars,
+.moves,
+.clock,
+.btn-reset {
+    font-size: 1.2em;
+}
+.stars {
+    display: flex;
+    list-style: none;
+}
+.stars li:not(:last-child) {
+    margin-right: 5px;
+}
+
+
+
+/*
+ * cards 
+ *
+ */
+.card {
+    font-size: 0;
+    color: #fff;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f1f1f;
+    transition: background-color .2s ease;
+}
+
+/* states of cards */
+.open {
+    cursor: pointer;
+    transform: rotateY(0);
+    background-color: #02b3e4;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+    animation-duration: .5s;
+    animation-name: flipY;
+}
+.show {
+    font-size: 2em;
+}
+.match {
+    cursor: default;
+    font-size: 2.5em;
+    background-color: #c2e72b;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+    animation-duration: .5s;
+    animation-name: rubber;
+}
+.unmatched {
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+    background-color: #e2043b;
+    animation-duration: .3s;
+    animation-name: pulse;
+}
+.disabled {
+    pointer-events: none;
+    opacity: .9;
+}
+
+
+
+/*
+ * Styles for congratulations modal
+ */
+.overlay {
+	top: 0;
+    left: 0;
+	right: 0;
+    bottom: 0;
+    opacity: 0;
+    display: flex;
+    position: fixed;
+    visibility: hidden;
+    align-items: center;
+    flex-direction: center;
+    transition: opacity 0.5s;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+.overlay:target {
+    visibility: visible;
+	opacity: 1;
+}
+.popup {
+    width: 40%;
+    padding: 1.5em;
+    color: #333;
+    margin: 0 auto;
+	background: #fff;
+    position: relative;
+}
+.popup h2 {
+    color: #333;
+    margin: 30px 0;
+}
+.popup p {
+    margin: 0;
+    line-height: 1;
+}
+.popup .close {
+	top: 5px;
+	right: 10px;
+    color: #333;
+    font-size: 1em;
+    font-weight: bold;
+    position: absolute;
+    text-decoration: none;
+    transition: all 200ms;
+}
+.popup .close:hover {
+	color: #e2043b;
+}
+.popup {
+	overflow: auto;
+	text-align: center;
+}
+.show {
+    visibility: visible;
+    opacity: 100;
+}
+.ranking {
+    display: flex;
+    font-size: 1.5em;
+    list-style: none;
+    margin: 20px auto 40px;
+    align-items: center;
+    justify-content: center;
+}
+.ranking li:not(:last-child) {
+	margin-right: 1rem;
+}
+.btn-play {
+	width: 90%;
+    border: none;
+    padding: 1rem;
+	color: #FFF;
+    margin: 0 auto;
+    display: block;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+	text-transform: uppercase;
+    background-color: #02b3e4;
+}
+
+
+/* animations */
+@keyframes flipY {
+	from {
+		transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+		animation-timing-function: ease-in;
+		opacity: 0;
+	}
+
+	40% {
+		transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+		animation-timing-function: ease-in;
+	}
+
+	60% {
+		transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+		opacity: 1;
+	}
+
+	80% {
+		transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+	}
+
+	to {
+		transform: perspective(400px);
+	}
+}
+
+@keyframes rubber {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+
+	30% {
+		transform: scale3d(1.25, 0.75, 1);
+	}
+
+	40% {
+		transform: scale3d(0.75, 1.25, 1);
+	}
+
+	50% {
+		transform: scale3d(1.15, 0.85, 1);
+	}
+
+	65% {
+		transform: scale3d(.95, 1.05, 1);
+	}
+
+	75% {
+		transform: scale3d(1.05, .95, 1);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+@keyframes pulse {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+
+	50% {
+		transform: scale3d(0.8, 0.8, 0.8);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+
+/*
+ * media queries
+ *
+ */
+
+/* Mobile */
+@media screen and (max-width: 413px) {
+	.board {
+        width: 100%;
+    }
+
+    .navigation {
+        font-size: 1em;
+    }
+
+    .popup {
+        width: 95%;
+        padding: 1em;
+        margin: 0 auto;
+    }
+}
+
+/* Tablet */
+@media screen and (min-width: 414px) and (max-width: 767px) {
+	.board {
+        width: 100%;
+    }
+
+    .deck {
+        grid-auto-rows: 85px;
+    }
+
+    .title {
+        font-size: 1.75em;
+    }
+
+    .popup {
+        width: 95%;
+    }
+
+    .btn-play {
+        width: 90%;
+    }
+}
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+	.board {
+        width: 65%;
+    }
+
+    .deck {
+        grid-auto-rows: 120px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    .navigation {
+        font-size: 1.5em;
+    }
+
+    .popup {
+        width: 50%;
+    }
+
+    .btn-play {
+        width: 90%;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 1025px) {
+	.board {
+        width: 50%;
+        padding: 0;
+        max-width: 680px;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    .navigation {
+        font-size: 1.5em;
+    }
+
+    .deck {
+        grid-auto-rows: 150px;
+    }
+
+    .popup {
+        width: 30%;
+    }
+
+    .btn-play {
+        width: 90%;
+    }
+}
